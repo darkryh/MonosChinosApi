@@ -1,6 +1,6 @@
 {
         "classList" : "li.col.mb-3:not(.ficha_efecto)",
-        "tittle" : "article h2",
+        "title" : "article h2",
         "image" : "article a div img",
         "number" : "article a div span.episode",
         "type" : "article span.my-1",

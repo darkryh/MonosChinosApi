@@ -1,0 +1,18 @@
+{
+  "title": "div.bg-transparent.p-3.h-100.scroll-x-md dl > :nth-child(6)",
+  "alternativeTitle": "div.bg-transparent.p-3.h-100.scroll-x-md dl > :nth-child(8)",
+  "status": "div.ms-2:nth-of-type(1) > :nth-child(2)",
+  "coverImage": "div.d-sm-none.tarjeta.position-relative.p-0 div.col-12 img",
+  "profileImage": "div.mt-5.mb-2.d-flex.d-none.d-sm-flex.gap-3 div img",
+  "release": "div.bg-transparent.p-3.h-100.scroll-x-md dl > :nth-child(4)",
+  "synopsis": "div.mb-3 p",
+  "genres": "span.badge.bg-secondary",
+  "episodes": {
+    "classList": "li.col.mb-3",
+    "title": "",
+    "number": "article a h2",
+    "image": "article a div.position-relative.overflow-hidden img",
+    "url": "article a"
+  },
+  "url": "article a"
+}

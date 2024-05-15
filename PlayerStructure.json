@@ -1,4 +1,5 @@
 {
-  "optionsClassList": "Clase de opciones",
-  "downloadsClassList": "Clase de descargas"
+  "optionsClassList": "button.play-video",
+  "optionAttribute": "data-player",
+  "downloadsClassList": "a.btn.btn-warning"
 }

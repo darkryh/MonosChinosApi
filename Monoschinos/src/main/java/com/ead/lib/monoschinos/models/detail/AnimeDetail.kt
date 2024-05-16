@@ -8,7 +8,5 @@ data class AnimeDetail(
     val profileImage : String,
     val release : String,
     val synopsis : String,
-    val genres : List<String>,
-    val episodes : List<Episode>,
-    val url : String
+    val genres : List<String>
 )

@@ -6,7 +6,5 @@
   "profileImage": "div.mt-5.mb-2.d-flex.d-none.d-sm-flex.gap-3 div img",
   "release": "div.bg-transparent.p-3.h-100.scroll-x-md dl > :nth-child(4)",
   "synopsis": "div.mb-3 p",
-  "genres": "span.badge.bg-secondary",
-  "episodes": "div.ep_count",
-  "url": "article a"
+  "genres": "span.badge.bg-secondary"
 }

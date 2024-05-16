@@ -7,12 +7,6 @@
   "release": "div.bg-transparent.p-3.h-100.scroll-x-md dl > :nth-child(4)",
   "synopsis": "div.mb-3 p",
   "genres": "span.badge.bg-secondary",
-  "episodes": {
-    "classList": "li.col.mb-3",
-    "title": "",
-    "number": "article a h2",
-    "image": "article a div.position-relative.overflow-hidden img",
-    "url": "article a"
-  },
+  "episodes": "div.ep_count",
   "url": "article a"
 }

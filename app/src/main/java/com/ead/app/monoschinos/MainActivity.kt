@@ -24,7 +24,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            viewModel.test()
+            viewModel.exampleCombiningHomeAndPlayer()
+            viewModel.exampleCombiningDirectoryAndDetail()
             MonosChinosTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(

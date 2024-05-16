@@ -5,6 +5,7 @@ import com.ead.lib.monoschinos.core.Properties
 data class HomeChapter(
     val title : String,
     val number : Int,
+    val type : String,
     val image : String,
     val url : String
 ) {

@@ -1,12 +1,13 @@
 package com.ead.lib.monoschinos.core.system.extensions
 
+import com.ead.lib.monoschinos.models.detail.Episode
 import com.ead.lib.monoschinos.models.structure.detail.AnimeDetailStructure
-import com.ead.lib.monoschinos.models.structure.detail.EpisodeStructure
 import com.ead.lib.monoschinos.models.structure.directory.AnimeStructure
 import com.ead.lib.monoschinos.models.structure.home.HomeAnimeStructure
 import com.ead.lib.monoschinos.models.structure.home.HomeChapterStructure
 import com.ead.lib.monoschinos.models.structure.home.HomeStructure
 import com.ead.lib.monoschinos.models.structure.player.PlayerStructure
+import org.json.JSONArray
 import org.json.JSONObject
 
 fun JSONObject.toHomeStructure() : HomeStructure {
@@ -33,8 +34,6 @@ fun JSONObject.toHomeStructure() : HomeStructure {
 }
 
 fun JSONObject.toAnimeDetailStructure() : AnimeDetailStructure {
-    val episodes = getJSONObject("episodes")
-
     return AnimeDetailStructure(
         title = getString("title"),
         alternativeTitle = getString("alternativeTitle"),
@@ -43,15 +42,7 @@ fun JSONObject.toAnimeDetailStructure() : AnimeDetailStructure {
         profileImage = getString("profileImage"),
         release = getString("release"),
         synopsis = getString("synopsis"),
-        genres = getString("genres"),
-        episodes = EpisodeStructure(
-            classList = episodes.getString("classList"),
-            title = episodes.getString("title"),
-            number = episodes.getString("number"),
-            image = episodes.getString("image"),
-            url = episodes.getString("url")
-        ),
-        url = getString("url")
+        genres = getString("genres")
     )
 }
 
@@ -72,4 +63,27 @@ fun JSONObject.toPlayerStructure() : PlayerStructure {
         optionAttribute = getString("optionAttribute"),
         downloadsClassList = getString("downloadsClassList"),
     )
+}
+
+fun JSONArray.toEpisodeList(): List<Episode> {
+    val episodes = mutableListOf<Episode>()
+
+    for (i in 0 until length()) {
+
+        val jsonObject: JSONObject = getJSONObject(i)
+
+        val number = jsonObject.getInt("episodio")
+        val image = jsonObject.getString("thumb")
+        val url = jsonObject.getString("url")
+
+        episodes.add(
+            Episode(
+                number = number,
+                image = image,
+                url = url
+            )
+        )
+
+    }
+    return episodes
 }

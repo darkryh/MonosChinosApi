@@ -1,6 +1,5 @@
 package com.ead.app.monoschinos.presentation.main
 
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -9,28 +8,57 @@ import androidx.lifecycle.viewModelScope
 import com.ead.lib.monoschinos.MonosChinos
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class MainViewModel : ViewModel() {
 
     private val _result : MutableState<String?> = mutableStateOf(null)
     val result : State<String?> = _result
 
-    fun test() {
-        viewModelScope.launch(Dispatchers.IO) {
+    fun exampleCombiningHomeAndPlayer() = viewModelScope.launch(Dispatchers.IO) {
+        try {
             val home = MonosChinos
                 .builder()
                 .homePage()
-                .get()?: return@launch
-
-            val firstAnimeHome = home.lastChapters.first()
-
-            val result = MonosChinos
-                .builder()
-                .playerPage(firstAnimeHome.seo)
                 .get()
 
-            _result.value = result.toString()
-            Log.d("test", "test: $result")
+            val firstChapter = home
+                ?.lastChapters
+                ?.first() ?: return@launch
+
+            val animePlay = MonosChinos
+                .builder()
+                .playerPage(firstChapter.seo)
+                .get()
+
+            _result.value = animePlay.toString()
+        } catch (e : IOException) {
+            e.printStackTrace()
+        }
+    }
+
+    fun exampleCombiningDirectoryAndDetail() = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            val anime = MonosChinos
+                .builder()
+                .directoryPage(1)
+                .get()
+                .firstOrNull()
+
+            val selectedAnime = anime ?: MonosChinos
+                .builder()
+                .searchPage("dragon ball")
+                .get()
+                .first()
+
+            val animeDetail = MonosChinos
+                .builder()
+                .animeDetailPage(selectedAnime.seo)
+                .get()
+
+            _result.value = animeDetail.toString()
+        } catch (e : IOException) {
+            e.printStackTrace()
         }
     }
 }

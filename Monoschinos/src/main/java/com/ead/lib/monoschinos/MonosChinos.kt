@@ -1,12 +1,15 @@
 package com.ead.lib.monoschinos
 
-import com.ead.lib.monoschinos.models.Initializer
+import com.ead.lib.monoschinos.models.Builder
 
 class MonosChinos {
 
     companion object {
-        fun builder() : Initializer {
-            return Initializer()
+        /**
+         * return similar builder pattern
+         */
+        fun builder() : Builder {
+            return Builder()
         }
     }
 }

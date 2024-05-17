@@ -15,7 +15,7 @@ ViewModel() {
 
 	fun getHome(context : Context) = viewModelScope.launch(IO) {
 
-			val home : Home? = MonosChinos
+		val home : Home? = MonosChinos
                 .builder(context)
                 .homePage()
                 .get()
@@ -31,7 +31,7 @@ ViewModel() {
 
 	fun getAnimes(context : Context) = viewModelScope.launch(IO) {
 
-			val animeList : List<Anime> = MonosChinos
+		val animeList : List<Anime> = MonosChinos
                 .builder(context)
                 .searchPage("death note")
                 .get()
@@ -45,7 +45,7 @@ ViewModel() {
 
 	fun getAnimes(context : Context) = viewModelScope.launch(IO) {
 
-			val animeList : List<Anime> = MonosChinos
+		val animeList : List<Anime> = MonosChinos
                 .builder(context)
                 .searchPage("death note")
                 .get()
@@ -67,7 +67,8 @@ ViewModel() {
 - **Search** : the function searchPage(name : String).get() return a list
 - **AnimeDetail** : the function animeDetailPage(seo : String) return AnimeDetail?
 - **Chapters** : the function chaptersPage(seo : String) return a list
-#Objects
+
+# Objects
 ```kotlin
 data class Home(
     val lastChapters : List<HomeChapter>,
@@ -76,7 +77,7 @@ data class Home(
 ```
 ```kotlin
 data class HomeAnime(
-	val seo : String,
+    val seo : String,
     val title : String,
     val type : String,
     val image : String,
@@ -85,7 +86,7 @@ data class HomeAnime(
 ```
 ```kotlin
 data class HomeChapter(
-	val seo : String,
+    val seo : String,
     val title : String,
     val number : Int,
     val type : String,
@@ -95,7 +96,7 @@ data class HomeChapter(
 ```
 ```kotlin
 data class Anime(
-	val seo : String,
+    val seo : String,
     val title : String,
     val type : String,
     val year : Int,
@@ -117,7 +118,7 @@ data class AnimeDetail(
 ```
 ```kotlin
 data class Episode(
-	val seo : String,
+    val seo : String,
     val number : Int,
     val image : String,
     val url : String

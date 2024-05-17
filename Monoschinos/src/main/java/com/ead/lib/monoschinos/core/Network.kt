@@ -365,7 +365,7 @@ object Network {
          * Evaluating the chapter page
          * and getting the data
          */
-        val  data = Scrapper.evaluate(Properties.HOME_PAGE + Properties.ANIME_QUERY + seo, code = chapterRequester)
+        val  data = Scrapper.evaluate(Properties.HOME_PAGE + Properties.ANIME_QUERY + seo, code = chapterRequester, regex = regexRequested)
 
         /**
          * Mapping the json into episodes

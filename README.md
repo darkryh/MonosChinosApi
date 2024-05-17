@@ -20,8 +20,8 @@ ViewModel() {
                 .homePage()
                 .get()
 				
-			val lastChapter : List<HomeChapter> = home?.lastChapters
-			val recentSeries : List<HomeAnime> = home?.recentSeries
+		val lastChapter : List<HomeChapter> = home?.lastChapters
+		val recentSeries : List<HomeAnime> = home?.recentSeries
 	}
 }
 ```
@@ -50,11 +50,11 @@ ViewModel() {
                 .searchPage("death note")
                 .get()
 			
-			val anime = animeList.first()
+		val anime = animeList.first()
 			
-			//the seo is the id set the query
+		//the seo is the id set the query
 			
-			val animeDetail = MonosChinos
+		val animeDetail = MonosChinos
                 .builder(context)
                 .animeDetailPage(anime.seo)
                 .get()

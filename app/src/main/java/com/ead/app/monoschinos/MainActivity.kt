@@ -44,7 +44,8 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         item {
             Text(
                 text = name,
-                modifier = modifier
+                modifier = modifier,
+                maxLines = 30
             )
         }
     }

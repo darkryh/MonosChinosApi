@@ -42,13 +42,13 @@ class MainViewModel : ViewModel() {
         try {
             val anime = MonosChinos
                 .builder(context)
-                .directoryPage(1)
+                .searchPage("death note")
                 .get()
                 .firstOrNull()
 
             val selectedAnime = anime ?: MonosChinos
                 .builder(context)
-                .searchPage("dragon ball")
+                .directoryPage(1)
                 .get()
                 .first()
 

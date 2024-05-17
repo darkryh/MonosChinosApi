@@ -1,3 +1,5 @@
+Api lib with similar patron as a Builder Pattern + Builded with kotlin + Kotlin Coroutines :tw-1f4ab:
+
 # Installation
 with Gradle
 ```groovy  

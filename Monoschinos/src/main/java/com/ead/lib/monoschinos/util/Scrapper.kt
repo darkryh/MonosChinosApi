@@ -3,6 +3,7 @@ package com.ead.lib.monoschinos.util
 import android.content.Context
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.ead.lib.monoschinos.models.scrapper.ScrapperWebView
@@ -24,20 +25,25 @@ object Scrapper {
         delay(200)
     }
 
-    suspend fun evaluate(url : String, code : String) : String? {
+    suspend fun evaluate(url : String, code : String,regex: Regex) : String? {
         return suspendCancellableCoroutine { continuation ->
             Thread.onUi {
 
                 scrapper?.apply {
                     webViewClient = object : WebViewClient() {
 
-                        override fun onPageFinished(view: WebView?, url: String?) {
-                            super.onPageFinished(view, url)
-                            Thread.onUi {
-                                view?.evaluateJavascript(code) {
-                                    continuation.resume(it)
+                        override fun shouldInterceptRequest(
+                            view: WebView?,
+                            request: WebResourceRequest?
+                        ): WebResourceResponse? {
+                            if (regex.matches(request?.url.toString())) {
+                                Thread.onUi {
+                                    view?.evaluateJavascript(code) {
+                                        continuation.resume(it)
+                                    }
                                 }
                             }
+                            return super.shouldInterceptRequest(view, request)
                         }
 
                         override fun onReceivedError(

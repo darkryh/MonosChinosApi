@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("maven-publish")
 }
 
 android {
@@ -32,10 +33,22 @@ android {
     }
 }
 
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            afterEvaluate {
+                from(components["release"])
+            }
+
+            groupId = "com.ead.lib"
+            artifactId = "monoschinos"
+            version = "0.0.5"
+        }
+    }
+}
+
 dependencies {
-    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.material)
     implementation(libs.webscraper)
     testImplementation(libs.junit)
     testImplementation(libs.junit.jupiter)

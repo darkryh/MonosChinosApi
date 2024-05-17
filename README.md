@@ -25,7 +25,7 @@ ViewModel() {
 	}
 }
 ```
-#Example to Search Anime
+# Example to Search Anime
 ```kotlin
 ViewModel() {
 
@@ -39,7 +39,7 @@ ViewModel() {
 }
 ```
 
-#Example to get Anime Details
+# Example to get Anime Details
 ```kotlin
 ViewModel() {
 
@@ -61,7 +61,7 @@ ViewModel() {
 	}
 }
 ```
-#Requests
+# Requests
 - **Home** : the function homePage().get() return a list
 - **Player** : the function playerPager(seo : String).get() return a Player?, the server options
 - **Search** : the function searchPage(name : String).get() return a list
@@ -129,5 +129,5 @@ data class Player(
     val downloads : List<String>
 )
 ```
-#Want to Contribute
+# Want to Contribute
 No problem sr, just contact me in my X account @Darkryh or just make a request.

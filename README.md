@@ -10,7 +10,7 @@ repositories {
 }  
   
 dependencies {  
-	implementation("com.github.darkryh:monoschinosapi:$version")
+	implementation("com.github.darkryh:MonosChinosApi:$version")
 }  
 ```  
 # Example to get HomePage

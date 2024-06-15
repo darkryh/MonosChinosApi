@@ -25,7 +25,7 @@ open class Builder(
      * home.lastAnimes : List type HomeAnime
      */
     fun homePage(): com.ead.lib.monoschinos.models.home.Get {
-        return com.ead.lib.monoschinos.models.home.Get()
+        return com.ead.lib.monoschinos.models.home.Get(context)
     }
 
 
@@ -54,7 +54,7 @@ open class Builder(
      * animeList : List type Anime
      */
     fun directoryPage(page: Int): com.ead.lib.monoschinos.models.directory.Get {
-        return com.ead.lib.monoschinos.models.directory.Get(page)
+        return com.ead.lib.monoschinos.models.directory.Get(context,page)
     }
 
 
@@ -83,7 +83,7 @@ open class Builder(
      * animeList : List type Anime
      */
     fun searchPage(query: String): com.ead.lib.monoschinos.models.search.Get {
-        return com.ead.lib.monoschinos.models.search.Get(query)
+        return com.ead.lib.monoschinos.models.search.Get(context,query)
     }
 
 
@@ -110,7 +110,7 @@ open class Builder(
      * animeDetail : AnimeDetail
      */
     fun animeDetailPage(seo : String): com.ead.lib.monoschinos.models.detail.Get {
-        return com.ead.lib.monoschinos.models.detail.Get(seo)
+        return com.ead.lib.monoschinos.models.detail.Get(context,seo)
     }
 
     /**
@@ -165,6 +165,6 @@ open class Builder(
      * playerDownloads : List type String
      */
     fun playerPage(seo : String): com.ead.lib.monoschinos.models.player.Get {
-        return com.ead.lib.monoschinos.models.player.Get(seo)
+        return com.ead.lib.monoschinos.models.player.Get(context,seo)
     }
 }

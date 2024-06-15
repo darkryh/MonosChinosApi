@@ -10,6 +10,9 @@ class Get(
 ) {
 
     suspend fun get() : List<Episode> {
-        return Network.episodes(seo,context)
+        return Network.episodes(context,seo)
     }
+
+    suspend fun getOrEmpty() : List<Episode> =
+        try { get() } catch (e: Exception) { emptyList() }
 }

@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.ead.lib.monoschinos.MonosChinos
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.IOException
 
 class MainViewModel : ViewModel() {
 
@@ -17,55 +16,47 @@ class MainViewModel : ViewModel() {
     val result : State<String?> = _result
 
     fun exampleCombiningHomeAndPlayer(context: Context) = viewModelScope.launch(Dispatchers.IO) {
-        try {
-            val home = MonosChinos
-                .builder(context)
-                .homePage()
-                .get()
+        val home = MonosChinos
+            .builder(context)
+            .homePage()
+            .getNullable()
 
-            val firstChapter = home
-                ?.lastChapters
-                ?.first() ?: return@launch
+        val firstChapter = home
+            ?.lastChapters
+            ?.first() ?: return@launch
 
-            val animePlay = MonosChinos
-                .builder(context)
-                .playerPage(firstChapter.seo)
-                .get()
+        val animePlay = MonosChinos
+            .builder(context)
+            .playerPage(firstChapter.seo)
+            .getNullable()
 
-            _result.value = home.toString() + animePlay.toString()
-        } catch (e : IOException) {
-            e.printStackTrace()
-        }
+        _result.value = home.toString() + animePlay.toString()
     }
 
     fun exampleCombiningDirectoryAndDetail(context: Context) = viewModelScope.launch(Dispatchers.IO) {
-        try {
-            val anime = MonosChinos
-                .builder(context)
-                .searchPage("death note")
-                .get()
-                .firstOrNull()
+        val anime = MonosChinos
+            .builder(context)
+            .searchPage("death note")
+            .getOrEmpty()
+            .firstOrNull()
 
-            val selectedAnime = anime ?: MonosChinos
-                .builder(context)
-                .directoryPage(1)
-                .get()
-                .first()
+        val selectedAnime = anime ?: MonosChinos
+            .builder(context)
+            .directoryPage(1)
+            .getOrEmpty()
+            .first()
 
-            val animeDetail = MonosChinos
-                .builder(context)
-                .animeDetailPage(selectedAnime.seo)
-                .get()
+        val animeDetail = MonosChinos
+            .builder(context)
+            .animeDetailPage(selectedAnime.seo)
+            .getNullable()
 
-            val episodes = MonosChinos
-                .builder(context)
-                .chaptersPage(selectedAnime.seo)
-                .get()
+        val episodes = MonosChinos
+            .builder(context)
+            .chaptersPage(selectedAnime.seo)
+            .getOrEmpty()
 
 
-            _result.value = anime.toString() + animeDetail.toString() + episodes.toString()
-        } catch (e : IOException) {
-            e.printStackTrace()
-        }
+        _result.value = anime.toString() + animeDetail.toString() + episodes.toString()
     }
 }

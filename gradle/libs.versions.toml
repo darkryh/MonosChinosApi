@@ -1,5 +1,5 @@
 [versions]
-agp = "8.4.0"
+agp = "8.5.0"
 jsoup = "1.17.2"
 junitJupiter = "5.8.1"
 kotlin = "1.9.0"
@@ -7,10 +7,10 @@ coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
-lifecycleRuntimeKtx = "2.7.0"
+lifecycleRuntimeKtx = "2.8.2"
 activityCompose = "1.9.0"
-composeBom = "2023.08.00"
-appcompat = "1.6.1"
+composeBom = "2024.06.00"
+appcompat = "1.7.0"
 webkit = "1.11.0"
 
 [libraries]
@@ -35,6 +35,5 @@ junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "jun
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

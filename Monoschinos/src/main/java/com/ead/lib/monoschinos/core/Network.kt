@@ -45,7 +45,7 @@ object Network {
      * Jsoup to extract the data from the page
      * and a call to an api to get the structure queries updated of the page
      */
-    suspend fun home() : Home? {
+    suspend fun home(context: Context) : Home {
 
         /**
          * Assigning variable with the singleton pattern
@@ -60,7 +60,7 @@ object Network {
         val homePage = Jsoup
             .connect(Properties.HOME_PAGE)
             .get()
-            .suspend() ?: return null
+            .suspend(context)
 
 
 
@@ -77,7 +77,7 @@ object Network {
          * to extract the image
          */
         val homeChapterAttr = srcHomeChapter ?: (lastChaptersClassList.firstOrNull()?.
-        getSrcAttr(homeStructure.homeChapterStructure.image) ?: return null)
+        getSrcAttr(homeStructure.homeChapterStructure.image) ?: "unknown")
             .also { srcHomeChapter = it }
 
 
@@ -95,7 +95,7 @@ object Network {
          * to extract the image
          */
         val homeAnimeAttr = srcHomeAnime ?: (homeAnimeClassList.firstOrNull()?.
-        getSrcAttr(homeStructure.homeAnimeStructure.image) ?: return null)
+        getSrcAttr(homeStructure.homeAnimeStructure.image) ?: "unknown")
             .also { srcHomeAnime = it }
 
 
@@ -151,7 +151,7 @@ object Network {
      * Jsoup to extract the data from the page and a api
      * call to get the structure queries updated of the page
      */
-    suspend fun animeDetail(seo : String) : AnimeDetail? {
+    suspend fun animeDetail(context: Context,seo : String) : AnimeDetail {
 
         /**
          * Assigning variable with the singleton pattern
@@ -166,7 +166,7 @@ object Network {
         val detailPage = Jsoup
             .connect(Properties.HOME_PAGE + Properties.ANIME_QUERY + seo)
             .get()
-            .suspend() ?: return null
+            .suspend(context)
 
 
 
@@ -233,7 +233,7 @@ object Network {
      * Jsoup to extract the data from the page and a api call
      * to get the structure queries updated of the page
      */
-    suspend fun pageQuery(query: Int) : List<Anime> {
+    suspend fun pageQuery(context: Context,query: Int) : List<Anime> {
 
         /**
          * Assigning variable with the singleton pattern
@@ -248,7 +248,7 @@ object Network {
         val queryPage = Jsoup
             .connect(Properties.HOME_PAGE + Properties.QUERY_PAGE + query)
             .get()
-            .suspend() ?: return emptyList()
+            .suspend(context)
 
 
 
@@ -300,7 +300,7 @@ object Network {
      * Jsoup to extract the data from the page and a api call
      * to get the structure queries updated of the page
      */
-    suspend fun searchQuery(query: String) : List<Anime> {
+    suspend fun searchQuery(context: Context,query: String) : List<Anime> {
 
         /**
          * Assigning variable with the singleton pattern
@@ -315,7 +315,7 @@ object Network {
         val queryPage = Jsoup
             .connect(Properties.HOME_PAGE + Properties.QUERY_SEARCH + query)
             .get()
-            .suspend() ?: return emptyList()
+            .suspend(context)
 
 
 
@@ -355,7 +355,7 @@ object Network {
      * Initialization of the Scrapper
      * getting evaluation code
      */
-    suspend fun episodes(seo : String, context: Context) : List<Episode> {
+    suspend fun episodes(context: Context,seo : String) : List<Episode> {
         /**
          * Initialize the Scrapper
          */
@@ -391,7 +391,7 @@ object Network {
      *
      * Including a decoder to handle the encrypted data in player
      */
-    suspend fun player(seo : String) : Player? {
+    suspend fun player(context: Context,seo : String) : Player {
 
         /**
          * Assigning variable with the singleton pattern
@@ -406,7 +406,7 @@ object Network {
         val playerPage = Jsoup
             .connect(Properties.HOME_PAGE + Properties.PLAY_PAGE + seo)
             .get()
-            .suspend() ?: return null
+            .suspend(context)
 
 
 

@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/darkryh/MonosChinosApi.svg)](https://jitpack.io/#darkryh/MonosChinosApi)
+
 Api lib with similar patron as a Builder Pattern + Builded with kotlin + Kotlin Coroutines :balloon:
 
 # Installation
@@ -8,7 +10,7 @@ repositories {
 }  
   
 dependencies {  
-	implementation("com.github.darkryh:monoschinosapi:0.0.1")
+	implementation("com.github.darkryh:MonosChinosApi:$version")
 }  
 ```  
 # Example to get HomePage

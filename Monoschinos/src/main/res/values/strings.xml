@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bad_request">bad request</string>
+    <string name="unauthorized">unauthorized</string>
+    <string name="forbidden">forbidden</string>
+    <string name="not_found">not found</string>
+    <string name="internal_server_error">internal server error</string>
+    <string name="bad_gateway">bad gateway</string>
+    <string name="service_unavailable">service unavailable</string>
+    <string name="gateway_timeout">gateway timeout</string>
+    <string name="unknown_error">unknown error</string>
+</resources>

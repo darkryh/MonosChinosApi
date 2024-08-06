@@ -1,6 +1,6 @@
 {
   "homeChapterStructure": {
-    "classList": "li.col.mb-3:not(.ficha_efecto)",
+    "classList": "li.col.mb-4:not(.ficha_efecto)",
     "title": "article h2",
     "number": "article a div span.episode",
     "type": "article span.my-1",
@@ -8,7 +8,7 @@
     "url": "article a"
   },
   "homeAnimeStructure": {
-    "classList": "li.col.mb-3.ficha_efecto",
+    "classList": "li.col.mb-4.ficha_efecto",
     "title": "article a h3",
     "type": "article a div div span",
     "image": "article a div img",

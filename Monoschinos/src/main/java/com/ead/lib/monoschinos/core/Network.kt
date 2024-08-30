@@ -146,7 +146,7 @@ object Network {
 
 
     /**
-     * This es anime detail method to get the anime detail data
+     * This is anime detail method to get the anime detail data
      * from the web page MonosChinos it's compose with
      * Jsoup to extract the data from the page and a api
      * call to get the structure queries updated of the page

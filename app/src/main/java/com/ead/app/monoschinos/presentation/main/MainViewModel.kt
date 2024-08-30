@@ -23,7 +23,7 @@ class MainViewModel : ViewModel() {
 
         val firstChapter = home
             ?.lastChapters
-            ?.first() ?: return@launch
+            ?.firstOrNull() ?: return@launch
 
         val animePlay = MonosChinos
             .builder(context)
@@ -44,7 +44,7 @@ class MainViewModel : ViewModel() {
             .builder(context)
             .directoryPage(1)
             .getOrEmpty()
-            .first()
+            .firstOrNull()?:return@launch
 
         val animeDetail = MonosChinos
             .builder(context)

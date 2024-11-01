@@ -1,6 +1,5 @@
 package com.ead.app.monoschinos.presentation.main
 
-import android.content.Context
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -15,8 +14,8 @@ class MainViewModel : ViewModel() {
     private val _result : MutableState<String?> = mutableStateOf(null)
     val result : State<String?> = _result
 
-    fun exampleCombiningHomeAndPlayer(context: Context) = viewModelScope.launch(Dispatchers.IO) {
-        val home = MonosChinos
+    fun exampleCombiningHomeAndPlayer() = viewModelScope.launch(Dispatchers.IO) {
+        /*val home = MonosChinos
             .builder(context)
             .homePage()
             .getNullable()
@@ -30,33 +29,20 @@ class MainViewModel : ViewModel() {
             .playerPage(firstChapter.seo)
             .getNullable()
 
-        _result.value = home.toString() + animePlay.toString()
+        _result.value = home.toString() + animePlay.toString()*/
     }
 
-    fun exampleCombiningDirectoryAndDetail(context: Context) = viewModelScope.launch(Dispatchers.IO) {
+    fun exampleCombiningDirectoryAndDetail() = viewModelScope.launch(Dispatchers.IO) {
         val anime = MonosChinos
-            .builder(context)
-            .searchPage("death note")
-            .getOrEmpty()
+            .searchQuery("death note")
             .firstOrNull()
 
-        val selectedAnime = anime ?: MonosChinos
-            .builder(context)
-            .directoryPage(1)
-            .getOrEmpty()
-            .firstOrNull()?:return@launch
-
-        val animeDetail = MonosChinos
-            .builder(context)
-            .animeDetailPage(selectedAnime.seo)
-            .getNullable()
-
         val episodes = MonosChinos
-            .builder(context)
-            .chaptersPage(selectedAnime.seo)
-            .getOrEmpty()
+            .episodes(anime?.seo ?: return@launch)
 
+        val player = MonosChinos
+            .player(episodes.firstOrNull()?.seo ?: return@launch)
 
-        _result.value = anime.toString() + animeDetail.toString() + episodes.toString()
+        _result.value = episodes.toString()
     }
 }

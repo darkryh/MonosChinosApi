@@ -19,13 +19,18 @@ import com.ead.lib.monoschinos.util.HttpUtil
 
 object Api {
 
-    fun getHomeStructure() : HomeStructure = HttpUtil.getJson(BASE_URL + HOME_API).toHomeStructure()
+    private var mHomeStructure : HomeStructure? = null
+    fun getHomeStructure() : HomeStructure = mHomeStructure ?: HttpUtil.getJson(BASE_URL + HOME_API).toHomeStructure()
 
-    fun getAnimeDetailStructure() : AnimeDetailStructure = HttpUtil.getJson(BASE_URL + ANIME_DETAIL_API).toAnimeDetailStructure()
+    private var mAnimeDetailStructure : AnimeDetailStructure? = null
+    fun getAnimeDetailStructure() : AnimeDetailStructure = mAnimeDetailStructure ?: HttpUtil.getJson(BASE_URL + ANIME_DETAIL_API).toAnimeDetailStructure()
 
-    fun getAnimePageQueryStructure(): AnimeStructure = HttpUtil.getJson(BASE_URL + ANIME_PAGE_API).toAnimeStructure()
+    private var mAnimePageQueryStructure : AnimeStructure? = null
+    fun getAnimePageQueryStructure(): AnimeStructure = mAnimePageQueryStructure ?: HttpUtil.getJson(BASE_URL + ANIME_PAGE_API).toAnimeStructure()
 
-    fun getAnimeSearchQueryStructure(): AnimeStructure = HttpUtil.getJson(BASE_URL + ANIME_SEARCH_API).toAnimeStructure()
+    private var mAnimeSearchQueryStructure : AnimeStructure? = null
+    fun getAnimeSearchQueryStructure(): AnimeStructure = mAnimeSearchQueryStructure ?: HttpUtil.getJson(BASE_URL + ANIME_SEARCH_API).toAnimeStructure()
 
-    fun getPlayerStructure(): PlayerStructure = HttpUtil.getJson(BASE_URL + PLAYER_API).toPlayerStructure()
+    private var mPlayerStructure : PlayerStructure? = null
+    fun getPlayerStructure(): PlayerStructure = mPlayerStructure ?: HttpUtil.getJson(BASE_URL + PLAYER_API).toPlayerStructure()
 }

@@ -8,7 +8,6 @@ import com.ead.lib.monoschinos.core.Properties.CSS_SELECTOR_INTERNAL_API
 import com.ead.lib.monoschinos.core.Properties.PAYLOAD_PAGE
 import com.ead.lib.monoschinos.core.Properties.PAYLOAD_TOKEN
 import com.ead.lib.monoschinos.core.connection.RestClient
-import com.ead.lib.monoschinos.core.system.extensions.await
 import com.ead.lib.monoschinos.core.system.extensions.toEpisodeList
 import com.ead.lib.monoschinos.models.detail.Episode
 import okhttp3.FormBody

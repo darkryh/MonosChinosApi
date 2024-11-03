@@ -43,14 +43,12 @@ ViewModel() {
 
 	fun getAnimes(context : Context) = viewModelScope.launch(IO) {
 
-		val animeList : List<Anime> = MonosChinos
-            .searchQuery("death note")
+		val animeList : List<Anime> = MonosChinos.searchQuery("death note")
 			
 		val anime = animeList.first()
 			
 		//the seo is the id set the query
-		val animeDetail = MonosChinos
-            .player(anime.seo)
+		val animeDetail = MonosChinos.player(anime.seo)
 	}
 }
 ```

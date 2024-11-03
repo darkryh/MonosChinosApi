@@ -19,18 +19,18 @@ import com.ead.lib.monoschinos.util.HttpUtil
 
 object Api {
 
-    private var mHomeStructure : HomeStructure? = null
-    fun getHomeStructure() : HomeStructure = mHomeStructure ?: HttpUtil.getJson(BASE_URL + HOME_API).toHomeStructure()
+    private var homeStructure : HomeStructure? = null
+    fun getHomeStructure() : HomeStructure = homeStructure ?: HttpUtil.getJson(BASE_URL + HOME_API).toHomeStructure().also { homeStructure = it }
 
-    private var mAnimeDetailStructure : AnimeDetailStructure? = null
-    fun getAnimeDetailStructure() : AnimeDetailStructure = mAnimeDetailStructure ?: HttpUtil.getJson(BASE_URL + ANIME_DETAIL_API).toAnimeDetailStructure()
+    private var animeDetailStructure : AnimeDetailStructure? = null
+    fun getAnimeDetailStructure() : AnimeDetailStructure = animeDetailStructure ?: HttpUtil.getJson(BASE_URL + ANIME_DETAIL_API).toAnimeDetailStructure().also { animeDetailStructure = it }
 
-    private var mAnimePageQueryStructure : AnimeStructure? = null
-    fun getAnimePageQueryStructure(): AnimeStructure = mAnimePageQueryStructure ?: HttpUtil.getJson(BASE_URL + ANIME_PAGE_API).toAnimeStructure()
+    private var animePageQueryStructure : AnimeStructure? = null
+    fun getAnimePageQueryStructure(): AnimeStructure = animePageQueryStructure ?: HttpUtil.getJson(BASE_URL + ANIME_PAGE_API).toAnimeStructure().also { animePageQueryStructure = it }
 
-    private var mAnimeSearchQueryStructure : AnimeStructure? = null
-    fun getAnimeSearchQueryStructure(): AnimeStructure = mAnimeSearchQueryStructure ?: HttpUtil.getJson(BASE_URL + ANIME_SEARCH_API).toAnimeStructure()
+    private var animeSearchQueryStructure : AnimeStructure? = null
+    fun getAnimeSearchQueryStructure(): AnimeStructure = animeSearchQueryStructure ?: HttpUtil.getJson(BASE_URL + ANIME_SEARCH_API).toAnimeStructure().also { animeSearchQueryStructure = it }
 
-    private var mPlayerStructure : PlayerStructure? = null
-    fun getPlayerStructure(): PlayerStructure = mPlayerStructure ?: HttpUtil.getJson(BASE_URL + PLAYER_API).toPlayerStructure()
+    private var playerStructure : PlayerStructure? = null
+    fun getPlayerStructure(): PlayerStructure = playerStructure ?: HttpUtil.getJson(BASE_URL + PLAYER_API).toPlayerStructure().also { playerStructure = it }
 }

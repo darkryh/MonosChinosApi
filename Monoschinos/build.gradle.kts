@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.ead.lib.monoschinos"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 26
@@ -54,14 +54,13 @@ dependencies {
     testImplementation(libs.junit.jupiter)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation(libs.androidx.webkit)
-
-    implementation("com.github.darkryh:CloudFlare-ByPass:0.0.1")
 
     // define a BOM and its version
-    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.12.0"))
+    implementation(platform(libs.okhttp.bom))
 
     // define any required OkHttp artifacts without version
-    implementation("com.squareup.okhttp3:okhttp")
-    implementation("com.squareup.okhttp3:logging-interceptor")
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
+    //implementation("com.github.darkryh:CloudFlare-ByPass:0.0.1")
 }

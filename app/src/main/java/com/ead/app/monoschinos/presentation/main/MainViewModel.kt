@@ -16,18 +16,14 @@ class MainViewModel : ViewModel() {
 
     fun exampleCombiningHomeAndPlayer() = viewModelScope.launch(Dispatchers.IO) {
         /*val home = MonosChinos
-            .builder(context)
-            .homePage()
-            .getNullable()
+            .getHome()
 
         val firstChapter = home
-            ?.lastChapters
-            ?.firstOrNull() ?: return@launch
+            .lastChapters
+            .firstOrNull() ?: return@launch
 
         val animePlay = MonosChinos
-            .builder(context)
-            .playerPage(firstChapter.seo)
-            .getNullable()
+            .player(firstChapter.seo)
 
         _result.value = home.toString() + animePlay.toString()*/
     }

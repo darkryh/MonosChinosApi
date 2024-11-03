@@ -19,13 +19,10 @@ ViewModel() {
 
 	fun getHome(context : Context) = viewModelScope.launch(IO) {
 
-		val home : Home? = MonosChinos
-                .builder(context)
-                .homePage()
-                .get()
+		val home : Home = MonosChinos.getHome()
 				
-		val lastChapter : List<HomeChapter> = home?.lastChapters
-		val recentSeries : List<HomeAnime> = home?.recentSeries
+		val lastChapter : List<HomeChapter> = home.lastChapters
+		val recentSeries : List<HomeAnime> = home.recentSeries
 	}
 }
 ```
@@ -35,10 +32,7 @@ ViewModel() {
 
 	fun getAnimes(context : Context) = viewModelScope.launch(IO) {
 
-		val animeList : List<Anime> = MonosChinos
-                .builder(context)
-                .searchPage("death note")
-                .get()
+		val animeList : List<Anime> = MonosChinos.searchQuery("death note")
 	}
 }
 ```
@@ -50,18 +44,13 @@ ViewModel() {
 	fun getAnimes(context : Context) = viewModelScope.launch(IO) {
 
 		val animeList : List<Anime> = MonosChinos
-                .builder(context)
-                .searchPage("death note")
-                .get()
+            .searchQuery("death note")
 			
 		val anime = animeList.first()
 			
 		//the seo is the id set the query
-			
 		val animeDetail = MonosChinos
-                .builder(context)
-                .animeDetailPage(anime.seo)
-                .get()
+            .player(anime.seo)
 	}
 }
 ```

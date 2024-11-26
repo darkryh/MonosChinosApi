@@ -1,3 +1,9 @@
+val monosChinosVersion: String by project
+val javaStringVersion: String by project
+val javaVersion = JavaVersion.toVersion(javaStringVersion)
+val compileAppSdkVersion : String by project
+val appSdkMinVersion : String by project
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -6,14 +12,14 @@ plugins {
 
 android {
     namespace = "com.ead.app.monoschinos"
-    compileSdk = 35
+    compileSdk = compileAppSdkVersion.toInt()
 
     defaultConfig {
         applicationId = "com.ead.app.monoschinos"
-        minSdk = 21
-        targetSdk = 35
+        minSdk = appSdkMinVersion.toInt()
+        targetSdk = compileAppSdkVersion.toInt()
         versionCode = 1
-        versionName = "1.0"
+        versionName = monosChinosVersion
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -32,11 +38,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = javaStringVersion
     }
     buildFeatures {
         compose = true
@@ -65,7 +71,6 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
 
     implementation(project(":Monoschinos"))
 }

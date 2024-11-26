@@ -12,7 +12,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.ead.app.monoschinos.presentation.main.MainViewModel
 import com.ead.app.monoschinos.presentation.theme.MonosChinosTheme
 
@@ -48,13 +47,5 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
                 maxLines = 30
             )
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MonosChinosTheme {
-        Greeting("Android")
     }
 }

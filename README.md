@@ -2,7 +2,7 @@
 
 # MonosChinosApi
 
-A Kotlin API library for interacting with the MonosChinos anime site, built with **Jsoup** for web scraping and **Kotlin Coroutines** for asynchronous operations. Designed with a **Builder Pattern-like style** for simplicity and flexibility. 🎉
+A Kotlin API library for interacting with the MonosChinos anime site, built with **Jsoup** for web scraping and **Kotlin Coroutines** for asynchronous operations. Designed with a **Object Reference style** for simplicity and flexibility. 🎉
 
 ---
 
@@ -51,7 +51,7 @@ class ExampleViewModel : ViewModel() {
         val anime : Anime? = animeList.firstOrNull()
 
         if (anime != null) {
-            val animeDetail = MonosChinos.player(anime.seo)
+            val animeDetail = MonosChinos.animeDetailPage(anime.seo)
         }
     }
 }

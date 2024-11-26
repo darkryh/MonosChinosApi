@@ -1,63 +1,71 @@
 [![](https://jitpack.io/v/darkryh/MonosChinosApi.svg)](https://jitpack.io/#darkryh/MonosChinosApi)
 
-Api lib with similar patron as a Builder Pattern + Builded with kotlin + Kotlin Coroutines :balloon:
+# MonosChinosApi
 
-# Installation
-with Gradle
-```groovy  
-repositories {   
-	maven { url 'https://jitpack.io' }  
-}  
-  
-dependencies {  
-	implementation("com.github.darkryh:MonosChinosApi:$version")
-}  
+A Kotlin API library for interacting with the MonosChinos anime site, built with **Jsoup** for web scraping and **Kotlin Coroutines** for asynchronous operations. Designed with a **Builder Pattern-like style** for simplicity and flexibility. 🎉
+
+---
+
+## Installation
+
+Add the JitPack repository and include the dependency in your `build.gradle` file:
+
+```groovy
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation("com.github.darkryh:MonosChinosApi:$version")
+}
+
 ```  
-# Example to get HomePage
+# Fetch Homepage
 ```kotlin
-ViewModel() {
+class ExampleViewModel : ViewModel() {
 
-	fun getHome() = viewModelScope.launch(IO) {
+    fun getHome() = viewModelScope.launch(Dispatchers.IO) {
+        val home: Home = MonosChinos.getHome()
 
-		val home : Home = MonosChinos.getHome()
-				
-		val lastChapter : List<HomeChapter> = home.lastChapters
-		val recentSeries : List<HomeAnime> = home.recentSeries
-	}
+        val lastChapters: List<HomeChapter> = home.lastChapters
+        val recentSeries: List<HomeAnime> = home.recentSeries
+    }
 }
 ```
-# Example to Search Anime
+# Search for Anime
 ```kotlin
-ViewModel() {
+class ExampleViewModel : ViewModel() {
 
-	fun getAnimes() = viewModelScope.launch(IO) {
-
-		val animeList : List<Anime> = MonosChinos.searchQuery("death note")
-	}
+    fun searchAnime() = viewModelScope.launch(Dispatchers.IO) {
+        val animeList: List<Anime> = MonosChinos.searchQuery("death note")
+    }
 }
 ```
 
-# Example to get Anime Details
+# Get Anime Details
 ```kotlin
-ViewModel() {
+class ExampleViewModel : ViewModel() {
 
-	fun getAnimes() = viewModelScope.launch(IO) {
+    fun getAnimeDetails() = viewModelScope.launch(Dispatchers.IO) {
+        val animeList: List<Anime> = MonosChinos.searchQuery("death note")
+        val anime : Anime? = animeList.firstOrNull()
 
-		val animeList : List<Anime> = MonosChinos.searchQuery("death note")
-			
-		val anime = animeList.first()
-			
-		//the seo is the id set the query
-		val animeDetail = MonosChinos.player(anime.seo)
-	}
+        if (anime != null) {
+            val animeDetail = MonosChinos.player(anime.seo)
+        }
+    }
 }
 ```
-# Requests
-- **Home** : the function homePage().get() return a list
-- **Player** : the function playerPager(seo : String).get() return a Player?, the server options
-- **Search** : the function searchPage(name : String).get() return a list
-- **AnimeDetail** : the function animeDetailPage(seo : String) return AnimeDetail?
-- **Chapters** : the function chaptersPage(seo : String) return a list
+### API Endpoints
+
+| **Endpoint**      | **Function**                                   | **Description**                                                                 |
+|-------------------|-----------------------------------------------|---------------------------------------------------------------------------------|
+| **Home**          | `getHome()`                                   | Returns a `Home` object containing the latest updates and recent anime series. |
+| **Player**        | `player(seo: String)`                         | Returns a `Player` object with server options and download links.              |
+| **Search**        | `searchQuery(name: String)`                   | Returns a list of `Anime` objects matching the search query.                   |
+| **Anime Details** | `animeDetailPage(seo: String)`                | Returns an `AnimeDetail` object with metadata and episodes.                    |
+| **Chapters**      | `chaptersPage(seo: String)`                   | Returns a list of `Episode` objects for a specific anime.                      |
+
 
 # Objects
 ```kotlin
@@ -122,4 +130,4 @@ data class Player(
 )
 ```
 # Want to Contribute
-No problem sr, just contact me in my X account @Darkryh or just make a request.
+Contributions are welcome! Feel free to reach out via my X account @Darkryh or create a pull request.

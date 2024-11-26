@@ -58,13 +58,13 @@ class ExampleViewModel : ViewModel() {
 ```
 ### API Endpoints
 
-| **Endpoint**      | **Function**                                   | **Description**                                                                 |
-|-------------------|-----------------------------------------------|---------------------------------------------------------------------------------|
-| **Home**          | `getHome()`                                   | Returns a `Home` object containing the latest updates and recent anime series. |
-| **Player**        | `player(seo: String)`                         | Returns a `Player` object with server options and download links.              |
-| **Search**        | `searchQuery(name: String)`                   | Returns a list of `Anime` objects matching the search query.                   |
-| **Anime Details** | `animeDetailPage(seo: String)`                | Returns an `AnimeDetail` object with metadata and episodes.                    |
-| **Chapters**      | `chaptersPage(seo: String)`                   | Returns a list of `Episode` objects for a specific anime.                      |
+| **Endpoint**      | **Function**                                | **Description**                                                                   |
+|-------------------|---------------------------------------------|-----------------------------------------------------------------------------------|
+| **Home**          | `getHome()`                                 | Returns a `Home` object containing the latest updates and recent anime series.    |
+| **Player**        | `player(seo: String)`                       | Returns a `Player` object with server options and download links.                 |
+| **Search**        | `searchQuery(name: String)`                 | Returns a list of `Anime` objects matching the search query.                      |
+| **Anime Details** | `animeDetailPage(seo: String)`              | Returns an `AnimeDetail` object with metadata, to get episodes see episodes(seo). |
+| **Chapters**      | `episodes(seo: String)`                     | Returns a list of `Episode` objects for a specific anime.                         |
 
 
 # Objects

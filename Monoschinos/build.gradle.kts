@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
+val monosChinosVersion: String by project
 val javaStringVersion: String by project
 val javaVersion = JavaVersion.toVersion(javaStringVersion)
 val javaVirtualMachineTarget = JvmTarget.fromTarget(javaStringVersion)
@@ -30,18 +31,29 @@ publishing {
 
             groupId = "com.ead.lib"
             artifactId = "monoschinos"
-            version = "0.1.0"
+            version = monosChinosVersion
         }
     }
 }
 
 dependencies {
+
+    // coroutines
+    implementation(libs.kotlinx.coroutines.core)
+
+    // json handler
+    implementation(libs.json)
+
+    // jsoup scrapper
     implementation(libs.jsoup)
-    testImplementation(libs.junit)
-    testImplementation(libs.junit.jupiter)
+
+    // http client
     implementation(platform(libs.okhttp.bom))
     implementation(libs.okhttp)
     implementation(libs.okhttp.interceptor)
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.json)
+
+
+    // tests
+    testImplementation(libs.junit)
+    testImplementation(libs.junit.jupiter)
 }

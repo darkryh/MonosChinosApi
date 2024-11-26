@@ -17,7 +17,7 @@ dependencies {
 ```kotlin
 ViewModel() {
 
-	fun getHome(context : Context) = viewModelScope.launch(IO) {
+	fun getHome() = viewModelScope.launch(IO) {
 
 		val home : Home = MonosChinos.getHome()
 				
@@ -30,7 +30,7 @@ ViewModel() {
 ```kotlin
 ViewModel() {
 
-	fun getAnimes(context : Context) = viewModelScope.launch(IO) {
+	fun getAnimes() = viewModelScope.launch(IO) {
 
 		val animeList : List<Anime> = MonosChinos.searchQuery("death note")
 	}
@@ -41,7 +41,7 @@ ViewModel() {
 ```kotlin
 ViewModel() {
 
-	fun getAnimes(context : Context) = viewModelScope.launch(IO) {
+	fun getAnimes() = viewModelScope.launch(IO) {
 
 		val animeList : List<Anime> = MonosChinos.searchQuery("death note")
 			

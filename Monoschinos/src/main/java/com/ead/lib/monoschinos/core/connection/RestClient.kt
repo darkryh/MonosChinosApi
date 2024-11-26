@@ -5,10 +5,10 @@ import com.ead.lib.monoschinos.core.system.extensions.await
 import okhttp3.FormBody
 import okhttp3.Headers
 
-class RestClient(val isDebug: Boolean = false) : MonosChinosClient() {
-    val client = httpClient
-    val requestClient = requestHttpClient
+class RestClient(private val isDebug: Boolean = false) : MonosChinosClient() {
 
+    private val client = httpClient
+    private val requestClient = requestHttpClient
 
     suspend fun request(endPoint: String): String {
         runCatching {
@@ -93,7 +93,7 @@ class RestClient(val isDebug: Boolean = false) : MonosChinosClient() {
 
             val status = response.code
 
-            val body = response.body
+            val responseBody = response.body
 
             if (status !in 200..299) {
                 if (status in 500..599) {
@@ -102,7 +102,7 @@ class RestClient(val isDebug: Boolean = false) : MonosChinosClient() {
                     if (isDebug) throw ex else exceptionHandler(ex)
                 } else {
                     val ex = Exception(
-                        "MonosChinos API returns code $status and body $body",
+                        "MonosChinos API returns code $status and body $responseBody",
                     )
 
                     if (isDebug) throw ex
@@ -110,13 +110,13 @@ class RestClient(val isDebug: Boolean = false) : MonosChinosClient() {
                 }
             }
 
-            return body?.string() ?: throw Exception("Empty body")
+            return responseBody?.string() ?: throw Exception("Empty body")
         }.getOrElse { throwable -> throw throwable }
     }
 
     private fun exceptionHandler(ex: Exception, message: String? = null) {
-        /*if (message.isNullOrEmpty()) Log.e("error","Something went wrong! Exception: ${ex.localizedMessage}")
-        else Log.e("error", "Something went wrong! Exception: ${ex.localizedMessage}")*/
+        if (message.isNullOrEmpty()) println("Something went wrong! Exception: ${ex.localizedMessage}")
+        else println("Something went wrong! Exception: ${ex.localizedMessage}")
     }
 
     companion object {

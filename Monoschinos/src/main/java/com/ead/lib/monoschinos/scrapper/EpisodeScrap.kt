@@ -17,15 +17,16 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
 
-val headers = Headers.Builder()
+private val headers = Headers.Builder()
     .add("accept", "application/json, text/javascript, */*; q=0.01")
     .add("accept-language", "es-419,es;q=0.8")
     .add("content-type", "application/x-www-form-urlencoded; charset=UTF-8")
     .add("origin", RestClient.BASE_URL)
     .add("x-requested-with", "XMLHttpRequest")
+    .build()
 
 
-suspend fun String.episodes(client: RestClient): List<Episode> {
+suspend fun String.episodesQuery(client: RestClient): List<Episode> {
 
     /**
      * Getting the chapter page with okhttp and parsing with jsoup
@@ -35,15 +36,12 @@ suspend fun String.episodes(client: RestClient): List<Episode> {
     val token = document.select(CSRF_TOKEN).attr("content")
     val internalApi = document.select(CSS_SELECTOR_INTERNAL_API).attr("data-ajax")
 
-    val referer = document.location()
-
-    headers["referer"] = referer
     var formBody = FormBody.Builder().add(PAYLOAD_TOKEN, token).build()
 
 
     var responseBody = client.postRequest(
         internalApi,
-        headers.build(),
+        headers,
         formBody
     )
 
@@ -68,7 +66,7 @@ suspend fun String.episodes(client: RestClient): List<Episode> {
 
         responseBody = client.postRequest(
             paginateUrl,
-            headers.build(),
+            headers,
             formBody
         )
 

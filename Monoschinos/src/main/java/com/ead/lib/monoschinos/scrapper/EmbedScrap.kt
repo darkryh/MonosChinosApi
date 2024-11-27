@@ -18,7 +18,7 @@ val player = Api.getPlayerStructure()
  * Including a decoder to handle the encrypted data in player
  */
 @OptIn(ExperimentalEncodingApi::class)
-fun String.player() : Player {
+fun String.playerQuery() : Player {
     /**
      * Getting the player page data with jsoup
      */

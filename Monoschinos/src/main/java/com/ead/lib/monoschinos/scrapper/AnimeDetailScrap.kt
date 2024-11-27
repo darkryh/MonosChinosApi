@@ -31,7 +31,7 @@ private var srcDetailProfile : String? = null
  * Jsoup to extract the data from the page and a api
  * call to get the structure queries updated of the page
  */
-fun String.extractAnimeDetail() : AnimeDetail {
+fun String.animeDetailQuery() : AnimeDetail {
     /**
      * Getting the anime detail page data with jsoup
      */

@@ -22,7 +22,7 @@ private var srcHomeAnime : String? = null
 
 
 
-fun String.extractHome() : Home {
+fun String.homeQuery() : Home {
     /**
      * Getting the home page data with jsoup
      */

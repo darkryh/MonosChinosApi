@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.ead.app.monoschinos.presentation.main
 
 import androidx.compose.runtime.MutableState
@@ -23,21 +25,20 @@ class MainViewModel : ViewModel() {
             .firstOrNull() ?: return@launch
 
         val animePlay = MonosChinos
-            .player(firstChapter.seo)
+            .getPlayer(firstChapter.seo)
 
         _result.value = home.toString() + animePlay.toString()*/
     }
 
     fun exampleCombiningDirectoryAndDetail() = viewModelScope.launch(Dispatchers.IO) {
         val anime = MonosChinos
-            .searchQuery("death note")
+            .getSearchQuery("death note")
             .firstOrNull()
 
         val episodes = MonosChinos
-            .episodes(anime?.seo ?: return@launch)
+            .getEpisodes(anime?.seo ?: return@launch)
 
-        val player = MonosChinos
-            .player(episodes.firstOrNull()?.seo ?: return@launch)
+        val player = MonosChinos.getPlayer(episodes.firstOrNull()?.seo ?: return@launch)
 
         _result.value = episodes.toString()
     }

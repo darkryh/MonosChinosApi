@@ -1,15 +1,11 @@
 package com.ead.lib.monoschinos.scrapper
 
-import com.ead.lib.monoschinos.core.Properties.CHAPTER_EPISODES
-import com.ead.lib.monoschinos.core.Properties.CHAPTER_EPISODES_PAGINATE
-import com.ead.lib.monoschinos.core.Properties.CHAPTER_EPISODES_PER_PAGE
-import com.ead.lib.monoschinos.core.Properties.CSRF_TOKEN
-import com.ead.lib.monoschinos.core.Properties.CSS_SELECTOR_INTERNAL_API
 import com.ead.lib.monoschinos.core.Properties.PAYLOAD_PAGE
 import com.ead.lib.monoschinos.core.Properties.PAYLOAD_TOKEN
 import com.ead.lib.monoschinos.core.connection.RestClient
 import com.ead.lib.monoschinos.core.system.extensions.toEpisodeList
 import com.ead.lib.monoschinos.models.detail.Episode
+import com.ead.lib.monoschinos.models.pagination.Pagination
 import okhttp3.FormBody
 import okhttp3.Headers
 import org.json.JSONObject
@@ -33,24 +29,15 @@ suspend fun String.episodesQuery(client: RestClient): List<Episode> {
      */
     val document: Document = Jsoup.parse(this)
 
-    val token = document.select(CSRF_TOKEN).attr("content")
-    val internalApi = document.select(CSS_SELECTOR_INTERNAL_API).attr("data-ajax")
+    val token = document.getCsrfToken()
+    val internalApi = document.getInternalApi()
 
     var formBody = FormBody.Builder().add(PAYLOAD_TOKEN, token).build()
 
-
-    var responseBody = client.postRequest(
+    val (total, perPage, paginateUrl) = client.getPaginateEpisodeData(
         internalApi,
-        headers,
-        formBody
-    )
-
-    val jsonObject = JSONObject(responseBody)
-
-    val (total, perPage, paginateUrl) = Triple(
-        jsonObject.getJSONArray(CHAPTER_EPISODES).length(),
-        jsonObject.getInt(CHAPTER_EPISODES_PER_PAGE),
-        jsonObject.getString(CHAPTER_EPISODES_PAGINATE)
+        formBody,
+        headers
     )
 
     val pages = (total / perPage) + 1
@@ -64,7 +51,7 @@ suspend fun String.episodesQuery(client: RestClient): List<Episode> {
             .add(PAYLOAD_PAGE, "$page")
             .build()
 
-        responseBody = client.postRequest(
+        val responseBody = client.postRequest(
             paginateUrl,
             headers,
             formBody
@@ -76,4 +63,49 @@ suspend fun String.episodesQuery(client: RestClient): List<Episode> {
     }
 
     return episodes
+}
+
+suspend fun String.episodesQuery(client: RestClient, page: Int? = null): Pagination<Episode> {
+
+    val document: Document = Jsoup.parse(this)
+    val token = document.getCsrfToken()
+    val internalApi = document.getInternalApi()
+
+    var formBody = FormBody.Builder().add(PAYLOAD_TOKEN, token).build()
+
+
+    val (total, perPage, paginateUrl) = client.getPaginateEpisodeData(
+        internalApi,
+        formBody,
+        headers
+    )
+
+    val totalPages = (total / perPage) + if (total % perPage != 0) 1 else 0
+
+    val currentPage = page ?: 1
+    val episodes = mutableListOf<Episode>()
+
+    if (currentPage in 1..totalPages) {
+        formBody = FormBody.Builder()
+            .add(PAYLOAD_TOKEN, token)
+            .add(PAYLOAD_PAGE, "$currentPage")
+            .build()
+
+        val responseBody = client.postRequest(
+            paginateUrl,
+            headers,
+            formBody
+        )
+
+        val arrayEpisodes = JSONObject(responseBody).getJSONArray("caps")
+        episodes.addAll(arrayEpisodes.toEpisodeList())
+    }
+
+    return Pagination(
+        totalItems = total,
+        itemsPerPage = perPage,
+        currentPage = currentPage,
+        totalPages = totalPages,
+        items = episodes
+    )
 }

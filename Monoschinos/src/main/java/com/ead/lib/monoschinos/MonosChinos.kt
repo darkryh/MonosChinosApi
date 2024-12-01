@@ -7,6 +7,7 @@ import com.ead.lib.monoschinos.models.home.Home
 import com.ead.lib.monoschinos.models.detail.AnimeDetail
 import com.ead.lib.monoschinos.models.detail.Episode
 import com.ead.lib.monoschinos.models.directory.Anime
+import com.ead.lib.monoschinos.models.pagination.Pagination
 import com.ead.lib.monoschinos.models.player.Player
 import com.ead.lib.monoschinos.scrapper.episodesQuery
 import com.ead.lib.monoschinos.scrapper.animeDetailQuery
@@ -35,7 +36,7 @@ object MonosChinos {
      * @return An [AnimeDetail] object with the anime's details.
      */
     suspend fun getAnime(seo: String): AnimeDetail {
-        return client.request("anime/$seo").animeDetailQuery()
+        return client.request("anime/$seo").animeDetailQuery(client)
     }
 
     /**
@@ -66,6 +67,17 @@ object MonosChinos {
      */
     suspend fun getEpisodes(seo: String): List<Episode> {
         return client.request("anime/$seo").episodesQuery(client)
+    }
+
+    /**
+     * Retrieves a paginated list of episodes for a specific anime using its SEO identifier.
+     *
+     * @param seo The SEO identifier of the anime.
+     * @param page The page number to retrieve.
+     * @return A [Pagination] object containing the retrieved episodes.
+     */
+    suspend fun getPaginationEpisodes(seo: String, page: Int? = null): Pagination<Episode> {
+        return client.request("anime/$seo").episodesQuery(client, page)
     }
 
     /**

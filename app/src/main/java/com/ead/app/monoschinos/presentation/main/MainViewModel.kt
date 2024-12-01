@@ -6,40 +6,36 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.ead.lib.monoschinos.MonosChinos
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import com.ead.app.monoschinos.presentation.main.util.EpisodePagingSource
+import com.ead.lib.monoschinos.models.detail.Episode
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 
 class MainViewModel : ViewModel() {
 
-    private val _result : MutableState<String?> = mutableStateOf(null)
-    val result : State<String?> = _result
+    private val _episodes: MutableState<Flow<PagingData<Episode>>> = mutableStateOf(emptyFlow())
+    val episodes: State<Flow<PagingData<Episode>>> = _episodes
 
-    fun exampleCombiningHomeAndPlayer() = viewModelScope.launch(Dispatchers.IO) {
-        /*val home = MonosChinos
-            .getHome()
-
-        val firstChapter = home
-            .lastChapters
-            .firstOrNull() ?: return@launch
-
-        val animePlay = MonosChinos
-            .getPlayer(firstChapter.seo)
-
-        _result.value = home.toString() + animePlay.toString()*/
+    /**
+     * Updates the episodes flow based on the provided SEO key.
+     */
+    fun loadEpisodes(seo: String) {
+        _episodes.value = getEpisodesPaging(seo)
     }
 
-    fun exampleCombiningDirectoryAndDetail() = viewModelScope.launch(Dispatchers.IO) {
-        val anime = MonosChinos
-            .getSearchQuery("death note")
-            .firstOrNull()
-
-        val episodes = MonosChinos
-            .getEpisodes(anime?.seo ?: return@launch)
-
-        val player = MonosChinos.getPlayer(episodes.firstOrNull()?.seo ?: return@launch)
-
-        _result.value = episodes.toString()
+    /**
+     * Provides a Flow of PagingData for Episodes using EpisodePagingSource.
+     */
+    private fun getEpisodesPaging(seo: String): Flow<PagingData<Episode>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 50,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { EpisodePagingSource(seo) }
+        ).flow
     }
 }

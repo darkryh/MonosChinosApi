@@ -36,7 +36,7 @@ object MonosChinos {
      * @return An [AnimeDetail] object with the anime's details.
      */
     suspend fun getAnime(seo: String): AnimeDetail {
-        return client.request("anime/$seo").animeDetailQuery()
+        return client.request("anime/$seo").animeDetailQuery(client)
     }
 
     /**

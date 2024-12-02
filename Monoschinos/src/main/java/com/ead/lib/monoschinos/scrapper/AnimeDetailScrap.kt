@@ -1,11 +1,22 @@
 package com.ead.lib.monoschinos.scrapper
 
 import com.ead.lib.monoschinos.core.Api
+import com.ead.lib.monoschinos.core.Properties.PAYLOAD_TOKEN
+import com.ead.lib.monoschinos.core.connection.RestClient
 import com.ead.lib.monoschinos.core.system.extensions.getSrcAttr
 import com.ead.lib.monoschinos.models.detail.AnimeDetail
+import okhttp3.FormBody
+import okhttp3.Headers
 import org.jsoup.Jsoup
 
 
+private val headers = Headers.Builder()
+    .add("accept", "application/json, text/javascript, */*; q=0.01")
+    .add("accept-language", "es-419,es;q=0.8")
+    .add("content-type", "application/x-www-form-urlencoded; charset=UTF-8")
+    .add("origin", RestClient.BASE_URL)
+    .add("x-requested-with", "XMLHttpRequest")
+    .build()
 
 /**
  * Anime detail structure resolve the structure of the page
@@ -32,18 +43,18 @@ private var srcDetailProfile : String? = null
  * Jsoup to extract the data from the page and a api
  * call to get the structure queries updated of the page
  */
-fun String.animeDetailQuery(): AnimeDetail {
+suspend fun String.animeDetailQuery(client: RestClient): AnimeDetail {
     /**
      * Getting the anime detail page data with jsoup
      */
-    val detailPage = Jsoup.parse(this)
+    val document = Jsoup.parse(this)
 
 
 
     /**
      * Getting the title of the anime from the page
      */
-    val title = detailPage
+    val title = document
         .select(animeDetail.title).text()
 
 
@@ -52,7 +63,7 @@ fun String.animeDetailQuery(): AnimeDetail {
      * Getting the detail cover image from the page to
      * attribute to extract the image
      */
-    val detailCoverAttr = srcDetailCover ?: (detailPage.select(animeDetail.coverImage).getSrcAttr())
+    val detailCoverAttr = srcDetailCover ?: (document.select(animeDetail.coverImage).getSrcAttr())
         .also { srcDetailCover = it }
 
 
@@ -61,8 +72,19 @@ fun String.animeDetailQuery(): AnimeDetail {
      * Getting the detail profile image from the page to
      * attribute to extract the image
      */
-    val detailProfileAttr = srcDetailProfile ?: (detailPage.select(animeDetail.profileImage).getSrcAttr())
+    val detailProfileAttr = srcDetailProfile ?: (document.select(animeDetail.profileImage).getSrcAttr())
         .also { srcDetailProfile = it }
+
+    val token = document.getCsrfToken()
+    val internalApi = document.getInternalApi()
+
+    val formBody = FormBody.Builder().add(PAYLOAD_TOKEN, token).build()
+
+    val totalEpisodes= client.getPaginateEpisodeData(
+        internalApi,
+        formBody,
+        headers
+    ).first
 
 
     return AnimeDetail(
@@ -70,13 +92,14 @@ fun String.animeDetailQuery(): AnimeDetail {
          * Mapping the whole jsoup data into the anime detail data
          */
         title = title,
-        alternativeTitle = detailPage
+        alternativeTitle = document
             .select(animeDetail.alternativeTitle).text().ifEmpty { null },
-        status = detailPage.select(animeDetail.status).firstOrNull()?.text().orEmpty(),
-        coverImage = detailPage.select(animeDetail.coverImage).attr(detailCoverAttr),
-        profileImage = detailPage.select(animeDetail.profileImage).attr(detailProfileAttr),
-        release = detailPage.select(animeDetail.release).text(),
-        synopsis = detailPage.select(animeDetail.synopsis).text(),
-        genres = detailPage.select(animeDetail.genres).map { element -> element.text() }
+        status = document.select(animeDetail.status).firstOrNull()?.text().orEmpty(),
+        coverImage = document.select(animeDetail.coverImage).attr(detailCoverAttr),
+        profileImage = document.select(animeDetail.profileImage).attr(detailProfileAttr),
+        totalEpisodes = totalEpisodes,
+        release = document.select(animeDetail.release).text(),
+        synopsis = document.select(animeDetail.synopsis).text(),
+        genres = document.select(animeDetail.genres).map { element -> element.text() }
     )
 }

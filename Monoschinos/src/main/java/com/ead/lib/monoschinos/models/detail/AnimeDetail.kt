@@ -6,7 +6,6 @@ data class AnimeDetail(
     val status : String,
     val coverImage : String,
     val profileImage : String,
-    val totalEpisodes : Int,
     val release : String,
     val synopsis : String,
     val genres : List<String>

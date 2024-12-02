@@ -1,22 +1,10 @@
 package com.ead.lib.monoschinos.scrapper
 
 import com.ead.lib.monoschinos.core.Api
-import com.ead.lib.monoschinos.core.Properties.PAYLOAD_TOKEN
-import com.ead.lib.monoschinos.core.connection.RestClient
 import com.ead.lib.monoschinos.core.system.extensions.getSrcAttr
 import com.ead.lib.monoschinos.models.detail.AnimeDetail
-import okhttp3.FormBody
-import okhttp3.Headers
 import org.jsoup.Jsoup
 
-
-private val headers = Headers.Builder()
-    .add("accept", "application/json, text/javascript, */*; q=0.01")
-    .add("accept-language", "es-419,es;q=0.8")
-    .add("content-type", "application/x-www-form-urlencoded; charset=UTF-8")
-    .add("origin", RestClient.BASE_URL)
-    .add("x-requested-with", "XMLHttpRequest")
-    .build()
 
 
 /**
@@ -44,7 +32,7 @@ private var srcDetailProfile : String? = null
  * Jsoup to extract the data from the page and a api
  * call to get the structure queries updated of the page
  */
-suspend fun String.animeDetailQuery(client: RestClient) : AnimeDetail {
+fun String.animeDetailQuery(): AnimeDetail {
     /**
      * Getting the anime detail page data with jsoup
      */
@@ -77,17 +65,6 @@ suspend fun String.animeDetailQuery(client: RestClient) : AnimeDetail {
         .also { srcDetailProfile = it }
 
 
-    val token = detailPage.getCsrfToken()
-    val internalApi = detailPage.getInternalApi()
-
-    val formBody = FormBody.Builder().add(PAYLOAD_TOKEN, token).build()
-
-    val totalEpisodes = client.getPaginateEpisodeData(
-        internalApi,
-        formBody,
-        headers
-    ).first
-
     return AnimeDetail(
         /**
          * Mapping the whole jsoup data into the anime detail data
@@ -98,7 +75,6 @@ suspend fun String.animeDetailQuery(client: RestClient) : AnimeDetail {
         status = detailPage.select(animeDetail.status).firstOrNull()?.text().orEmpty(),
         coverImage = detailPage.select(animeDetail.coverImage).attr(detailCoverAttr),
         profileImage = detailPage.select(animeDetail.profileImage).attr(detailProfileAttr),
-        totalEpisodes = totalEpisodes,
         release = detailPage.select(animeDetail.release).text(),
         synopsis = detailPage.select(animeDetail.synopsis).text(),
         genres = detailPage.select(animeDetail.genres).map { element -> element.text() }
